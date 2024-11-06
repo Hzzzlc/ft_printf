@@ -10,4 +10,4 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-//Es para imprimir un caracter, es decir : %c.
+//Es para imprimir un caracter, es decir : %c %%
