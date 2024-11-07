@@ -3,11 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hcruz-me <hcruz-me@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:14:09 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/06 12:14:09 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/07 10:07:46 by hcruz-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //%s
+int	ft_strlen(char *s)
+{
+	int count;
+
+	while(s[count] != '\0')
+	count++;
+	return (count);
+}

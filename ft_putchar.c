@@ -3,11 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hcruz-me <hcruz-me@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:49:48 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/06 11:49:48 by marvin           ###   ########.fr       */
+/*   Updated: 2024/11/07 09:57:44 by hcruz-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
+
 //Es para imprimir un caracter, es decir : %c %%
+int ft_putchar(int c)
+{
+    write(1, &c, 1);
+    return 0;
+}
