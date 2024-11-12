@@ -10,4 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_printf.h"
 //Para los enteros sin signo. %u
+unsigned int	ft_num_nosign(unsigned int num)
+{
+	int	i;
+
+	i = 0;
+	if (num > 9)
+	{
+		i = ft_num_nosign(num / 10);
+		if (i == -1)
+			return (-1);
+		num = num % 10;
+	}
+	if (num <= 9)
+	{
+		if (ft_putchar (('0' + num)) == -1)
+			return (-1);
+		i++;
+	}
+	return (i);
+}
