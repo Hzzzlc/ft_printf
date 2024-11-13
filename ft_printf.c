@@ -6,36 +6,19 @@
 /*   By: hcruz-me <hcruz-me@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:53 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/07 17:18:10 by hcruz-me         ###   ########.fr       */
+/*   Updated: 2024/11/13 14:32:04 by hcruz-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-//Funcion de los tipos de variables :
-static int variables(char c, va_list args)
-{
-	if ( c == 'X')
-		return (ft_hexa_max(va_arg(args, int)));
-	if ( c == 'x')
-		return (ft_hexa_min(va_arg(args, int)));
-	if ( c == 'c')
-		return (ft_putchar(va_arg(args, int)));
-	if ( c == 's')
-		return (ft_putstr(va_arg(args, char *)));
-	if ( c == 'u')
-		return (ft_unsigned_int(va_arg(args, unsigned int)));
-	if ( c == 'p')
-		return (ft_pointer(va_arg(args, void *)));
-	if ( c == 'd' || c == 'i')
-		return (ft_putnbr(va_arg(args, int)));
-	return (0);
-}
+
 //Funcion que recorrera la string para imprimirla.
 static int print_s(char *s, va_list args, int i)
 {
+	//Declaraciones de las variables :
 	int j;
-
+	//Inicializamos j a cero que sera el que recorrera s
 	j = 0;
 	while(s[j])
 	{
@@ -63,11 +46,14 @@ static int print_s(char *s, va_list args, int i)
 //Funcion que maneja dependiendo de que caracter hay despues del porcentaje como un tipo de variable o imprime el % literalmente.
 static int print_percent(char c, va_list args)
 {
+	//Declaracion de las variables :
 	int i;
-
+	//Inicializamos la i a 0
 	i = 0;
+	//Si es distinto de %
 	if (c != '%')
 	{
+		//i sera dependiendo del tipo de caracter que se le envie hara una accion u otra :
 		i = variables(c, args);
 		if (i == -1)
 			return (-1);
@@ -75,6 +61,7 @@ static int print_percent(char c, va_list args)
 	}
 	else
 	{
+		//Imprime el caracter literalmente :
 		if (write (1, &c, 1) != 1)
 			return (-1);
 		return (1);
@@ -93,6 +80,32 @@ int ft_printf(char const *s, ...)
 	i = print_s(s, args, i);
 	va_end(args);
 	return (i);
+}
+//Funcion de los tipos de variables :
+static int variables(char c, va_list args)
+{
+	//Cuando es un hexadecimal en mayusculas
+	if ( c == 'X')
+		return (ft_hexa_max(va_arg(args, int)));
+	//Cuando es un hexadecimal en minusculas
+	if ( c == 'x')
+		return (ft_hexa_min(va_arg(args, int)));
+	//Cuando es un caracter a imprimir
+	if ( c == 'c')
+		return (ft_putchar(va_arg(args, int)));
+	//Cuando es una cadena de caracteres a imprimir
+	if ( c == 's')
+		return (ft_putstr(va_arg(args, char *)));
+	//Cuando es un numero sin signo a imprimir
+	if ( c == 'u')
+		return (ft_unsigned_int(va_arg(args, unsigned int)));
+	//Cuando es un tipo void a imprimir
+	if ( c == 'p')
+		return (ft_pointer(va_arg(args, void *)));
+	//Cuando es un entero a imprimir
+	if ( c == 'd' || c == 'i')
+		return (ft_putnbr(va_arg(args, int)));
+	return (0);
 }
 
 
