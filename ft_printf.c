@@ -6,110 +6,44 @@
 /*   By: hcruz-me <hcruz-me@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 11:40:53 by marvin            #+#    #+#             */
-/*   Updated: 2024/11/13 14:32:04 by hcruz-me         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:18:10 by hcruz-me         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+int variables(char specifier, va_list args) {
+    int total = 0;
 
-//Funcion que recorrera la string para imprimirla.
-static int print_s(char *s, va_list args, int i)
-{
-	//Declaraciones de las variables :
-	int j;
-	//Inicializamos j a cero que sera el que recorrera s
-	j = 0;
-	while(s[j])
-	{
-		//Si el caracter es %
-		if (s[j] == '%')
-		{
-			//Llama a la funcion que es la que decidira la accion que hara dependiendo del caracter que pasara despues del %.
-			i += print_percent(s[j + 1], args);
-			if	(i == -1)
-				return (-1);
-			j++;
-		}
-		else
-		{
-			//Imprimimos el caracter %
-			if (write (1, &s[j], 1) != 1)
-				return (-1);
-			i++;
-		}
-		j++;
-	}
-	//Cantidad de caracteres impresos.
-	return (i);
-}
-//Funcion que maneja dependiendo de que caracter hay despues del porcentaje como un tipo de variable o imprime el % literalmente.
-static int print_percent(char c, va_list args)
-{
-	//Declaracion de las variables :
-	int i;
-	//Inicializamos la i a 0
-	i = 0;
-	//Si es distinto de %
-	if (c != '%')
-	{
-		//i sera dependiendo del tipo de caracter que se le envie hara una accion u otra :
-		i = variables(c, args);
-		if (i == -1)
-			return (-1);
-		return (i);
-	}
-	else
-	{
-		//Imprime el caracter literalmente :
-		if (write (1, &c, 1) != 1)
-			return (-1);
-		return (1);
-	}
-}
-//Funcion principal del proyecto.
-int ft_printf(char const *s, ...)
-{
-	//Declcaración de las variables :
-	va_list	args;
-	int		i;
-	//Inicializamos i a 0
-	i = 0;
-	//Inicializamos args para acceder a los argumentos.
-	va_start(args, s);
-	i = print_s(s, args, i);
-	va_end(args);
-	return (i);
-}
-//Funcion de los tipos de variables :
-static int variables(char c, va_list args)
-{
-	//Cuando es un hexadecimal en mayusculas
-	if ( c == 'X')
-		return (ft_hexa_max(va_arg(args, int)));
-	//Cuando es un hexadecimal en minusculas
-	if ( c == 'x')
-		return (ft_hexa_min(va_arg(args, int)));
-	//Cuando es un caracter a imprimir
-	if ( c == 'c')
-		return (ft_putchar(va_arg(args, int)));
-	//Cuando es una cadena de caracteres a imprimir
-	if ( c == 's')
-		return (ft_putstr(va_arg(args, char *)));
-	//Cuando es un numero sin signo a imprimir
-	if ( c == 'u')
-		return (ft_unsigned_int(va_arg(args, unsigned int)));
-	//Cuando es un tipo void a imprimir
-	if ( c == 'p')
-		return (ft_pointer(va_arg(args, void *)));
-	//Cuando es un entero a imprimir
-	if ( c == 'd' || c == 'i')
-		return (ft_putnbr(va_arg(args, int)));
-	return (0);
+    if (specifier == 'c') {
+        total += ft_putchar(va_arg(args, int));
+    } else if (specifier == 's') {
+        total += ft_putstr(va_arg(args, char *));
+    } else if (specifier == 'd' || specifier == 'i') {
+        total += ft_putnbr(va_arg(args, int));
+    } else if (specifier == 'p') {
+        total += ft_hexa(va_arg(args, void *));
+    } else if (specifier == '%') {
+        total += ft_putchar('%');
+    }
+
+    return total;
 }
 
+int ft_printf(const char *format, ...) {
+    va_list args;
+    int total = 0;
 
-//Teniendo en cuenta que var sirve para poder leer varios argumentos cuando se le envia al programa. es decir por ejemplo
-//							ft_printf("hola %d", 255);
-//con var va pasado paso a paso cada letra del hola y luego cuando lee el % lo que hace es leer la siguiente y depende de la letra hace una o otra cosa. 
-// Luego hay que gestionar lo que hay despues de las comillas, es decir la coma y la variable a la que se llama que sera la que se imprima que es llamada en las comillas con el porcentaje y la letra.
+    va_start(args, format);
+    while (*format) {
+        if (*format == '%') {
+            format++;
+            total += variables(*format, args);
+        } else {
+            total += ft_putchar(*format);
+        }
+        format++;
+    }
+    va_end(args);
+    return total;
+}
