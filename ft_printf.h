@@ -16,11 +16,11 @@
 # include <stdarg.h>
 # include <unistd.h>
 
-int ft_printf(const char *format, ...);
-int variables(char specifier, va_list args);
-int ft_putchar(char c);
-int ft_putstr(char *str);
-int ft_putnbr(int n);
-int ft_hexa(void *ptr);
+int	ft_printf(const char *format, ...);
+int	variables(char specifier, va_list args);
+int	ft_putchar(char c);
+int	ft_putstr(char *str);
+int	ft_putnbr(int n);
+int	ft_hexa(void *ptr);
 
 #endif

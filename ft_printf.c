@@ -12,38 +12,40 @@
 
 #include "ft_printf.h"
 
-int variables(char specifier, va_list args) {
-    int total = 0;
+int	variables(char specifier, va_list args)
+{
+	int total = 0;
 
-    if (specifier == 'c') {
-        total += ft_putchar(va_arg(args, int));
-    } else if (specifier == 's') {
-        total += ft_putstr(va_arg(args, char *));
-    } else if (specifier == 'd' || specifier == 'i') {
-        total += ft_putnbr(va_arg(args, int));
-    } else if (specifier == 'p') {
-        total += ft_hexa(va_arg(args, void *));
-    } else if (specifier == '%') {
-        total += ft_putchar('%');
-    }
-
-    return total;
+	if (specifier == 'c')
+		total += ft_putchar(va_arg(args, int));
+	else if (specifier == 's')
+		total += ft_putstr(va_arg(args, char *));
+	else if (specifier == 'd' || specifier == 'i')
+		total += ft_putnbr(va_arg(args, int));
+	else if (specifier == 'p')
+		total += ft_hexa(va_arg(args, void *));
+	else if (specifier == '%')
+		total += ft_putchar('%');
+	return total;
 }
 
-int ft_printf(const char *format, ...) {
-    va_list args;
-    int total = 0;
+int	ft_printf(const char *format, ...)
+{
+	va_list args;
+	int total = 0;
 
-    va_start(args, format);
-    while (*format) {
-        if (*format == '%') {
-            format++;
-            total += variables(*format, args);
-        } else {
-            total += ft_putchar(*format);
-        }
-        format++;
-    }
-    va_end(args);
-    return total;
+	va_start(args, format);
+	while (*format)
+	{
+		if (*format == '%')
+		{
+			format++;
+			total += variables(*format, args);
+		}
+		else
+			total += ft_putchar(*format);
+		format++;
+	}
+	va_end(args);
+	return total;
 }
