@@ -6,7 +6,7 @@ AR = ar
 
 ARFLAGS = rcs
 
-CFILES = ft_printf.c ft_void.c ft_unsigned_int.c ft_strlen.c ft_putstr.c ft_putnbr.c ft_putchar.c ft_hex_min.c ft_hex_mayus.c
+CFILES = ft_printf.c ft_printf_utils.c
 
 HEADER_DIR = ./includes
 
