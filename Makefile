@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 
-CC = CC
+CC = cc
 
 AR = ar
 
@@ -8,7 +8,7 @@ ARFLAGS = rcs
 
 CFILES = ft_printf.c ft_printf_utils.c
 
-HEADER_DIR = ./includes
+HEADER_DIR = /
 
 OBJ = $(CFILES:.c=.o)
 
